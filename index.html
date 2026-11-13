@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APALM - Agricultural Land Management</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f3f7f0;
+ color:#263b28;
+}
+header{
+ background:#14532d;
+ color:white;
+ padding:22px 15px;
+ text-align:center;
+}
+header h1{margin:0;font-size:27px}
+header p{margin:8px 0 0}
+nav{
+ display:flex;
+ flex-wrap:wrap;
+ justify-content:center;
+ background:#166534;
+}
+nav button{
+ border:0;
+ background:transparent;
+ color:white;
+ padding:14px 12px;
+ font-size:14px;
+ cursor:pointer;
+}
+nav button:hover{background:#22a34a}
+.hero{
+ background:linear-gradient(120deg,#14532d,#65a30d);
+ color:white;
+ text-align:center;
+ padding:45px 15px;
+}
+.hero h2{font-size:27px}
+.container{
+ max-width:1000px;
+ margin:auto;
+ padding:20px 14px;
+}
+.card{
+ background:white;
+ padding:20px;
+ margin:15px 0;
+ border-radius:12px;
+ box-shadow:0 3px 12px #00000012;
+}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:15px;
+}
+input,select,textarea{
+ width:100%;
+ padding:13px;
+ margin:8px 0;
+ border:1px solid #ccc;
+ border-radius:7px;
+ font-size:15px;
+}
+.primary{
+ background:#15803d;
+ color:white;
+ border:0;
+ padding:13px 20px;
+ border-radius:7px;
+ font-size:16px;
+ cursor:pointer;
+}
+.primary:hover{background:#166534}
+.page{display:none}
+.page.active{display:block}
+.land{
+ border:1px solid #ddd;
+ border-radius:10px;
+ padding:15px;
+ background:#fff;
+}
+.land h3{color:#166534}
+footer{
+ background:#14532d;
+ color:white;
+ text-align:center;
+ padding:22px;
+ margin-top:30px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🌾 APALM</h1>
+<p>Agricultural Land Management Application</p>
+<p>వ్యవసాయ భూముల కొనుగోలు మరియు అమ్మకాల వేదిక</p>
+</header>
+
+<nav>
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('lands')">Land for Sale</button>
+<button onclick="showPage('buyer')">Buyer Registration</button>
+<button onclick="showPage('seller')">Seller Registration</button>
+<button onclick="showPage('add')">Add Land</button>
+<button onclick="showPage('admin')">Admin</button>
+</nav>
+
+<section id="home" class="page active">
+<div class="hero">
+<h2>Welcome to APALM</h2>
+<h3>మీ వ్యవసాయ భూములకు సరైన వేదిక</h3>
+<p>Buy Agricultural Land | Sell Agricultural Land</p>
+<button class="primary" onclick="showPage('lands')">
+Explore Lands
+</button>
+</div>
+
+<div class="container">
+<div class="grid">
+<div class="card">
+<h2>🌾</h2>
+<h3>Agricultural Lands</h3>
+<p>అందుబాటులో ఉన్న వ్యవసాయ భూముల వివరాలు.</p>
+</div>
+<div class="card">
+<h2>🏡</h2>
+<h3>Land Buyers</h3>
+<p>భూమి కొనుగోలు చేయాలనుకునే వారి నమోదు.</p>
+</div>
+<div class="card">
+<h2>👨‍🌾</h2>
+<h3>Land Sellers</h3>
+<p>భూమి అమ్మాలనుకునే వారి నమోదు.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="lands" class="page container">
+<div class="card">
+<h2>🌾 Agricultural Land for Sale</h2>
+<div id="landList">
+<p>ఇంకా భూముల వివరాలు నమోదు కాలేదు.</p>
+</div>
+</div>
+</section>
+
+<section id="buyer" class="page container">
+<div class="card">
+<h2>🏡 Buyer Registration</h2>
+<form onsubmit="register(event,'Buyer')">
+<input name="name" placeholder="Full Name" required>
+<input name="phone" placeholder="Mobile Number" type="tel" required>
+<input name="location" placeholder="Preferred Location" required>
+<select name="budget" required>
+<option value="">Select Budget</option>
+<option>Below 5 Lakhs</option>
+<option>5 - 10 Lakhs</option>
+<option>10 - 25 Lakhs</option>
+<option>25 - 50 Lakhs</option>
+<option>Above 50 Lakhs</option>
+</select>
+<button class="primary">Register as Buyer</button>
+</form>
+</div>
+</section>
+
+<section id="seller" class="page container">
+<div class="card">
+<h2>👨‍🌾 Seller Registration</h2>
+<form onsubmit="register(event,'Seller')">
+<input name="name" placeholder="Seller Full Name" required>
+<input name="phone" placeholder="Mobile Number" type="tel" required>
+<input name="location" placeholder="Land Location" required>
+<input name="area" placeholder="Land Area (Acres)" type="number" step="any" required>
+<button class="primary">Register as Seller</button>
+</form>
+</div>
+</section>
+
+<section id="add" class="page container">
+<div class="card">
+<h2>➕ Add Agricultural Land</h2>
+<form onsubmit="addLand(event)">
+<input name="title" placeholder="Land Title" required>
+<input name="location" placeholder="Village / Mandal / District" required>
+<input name="area" placeholder="Land Area (Acres)" type="number" step="any" required>
+<input name="price" placeholder="Expected Price (₹)" type="number" required>
+<textarea name="details" placeholder="Land Details"></textarea>
+<input name="phone" placeholder="Contact Mobile Number" type="tel" required>
+<button class="primary">Submit Land Details</button>
+</form>
+</div>
+</section>
+
+<section id="admin" class="page container">
+<div class="card">
+<h2>🔐 Admin Login</h2>
+<p>Demo Admin Access</p>
+<input id="adminPin" type="password" placeholder="Enter Demo PIN">
+<button class="primary" onclick="adminLogin()">Login</button>
+<div id="adminData"></div>
+</div>
+</section>
+
+<footer>
+<h3>🌾 APALM</h3>
+<p>Agricultural Land Management Application</p>
+<p>© 2026 APALM. All Rights Reserved.</p>
+</footer>
+
+<script>
+let lands=JSON.parse(localStorage.getItem('apalmLands')||'[]');
+let users=JSON.parse(localStorage.getItem('apalmUsers')||'[]');
+
+function showPage(id){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ window.scrollTo(0,0);
+ if(id==='lands') displayLands();
+}
+
+function register(e,type){
+ e.preventDefault();
+ let data=Object.fromEntries(new FormData(e.target));
+ data.type=type;
+ users.push(data);
+ localStorage.setItem('apalmUsers',JSON.stringify(users));
+ alert(type+' Registration Successful!');
+ e.target.reset();
+}
+
+function addLand(e){
+ e.preventDefault();
+ let data=Object.fromEntries(new FormData(e.target));
+ lands.push(data);
+ localStorage.setItem('apalmLands',JSON.stringify(lands));
+ alert('Land Details Added Successfully!');
+ e.target.reset();
+ displayLands();
+}
+
+function displayLands(){
+ let box=document.getElementById('landList');
+ if(!lands.length){
+ box.innerHTML='<p>No lands available yet.</p>';
+ return;
+ }
+ box.innerHTML=lands.map((l,i)=>`
+ <div class="land">
+ <h3>🌾 ${l.title}</h3>
+ <p><b>Location:</b> ${l.location}</p>
+ <p><b>Area:</b> ${l.area} Acres</p>
+ <p><b>Price:</b> ₹${Number(l.price).toLocaleString('en-IN')}</p>
+ <p>${l.details||''}</p>
+ <a href="tel:${l.phone}">
+ <button class="primary">Contact Seller</button>
+ </a>
+ </div>
+ `).join('');
+}
+
+function adminLogin(){
+ if(document.getElementById('adminPin').value==='1234'){
+ document.getElementById('adminData').innerHTML=`
+ <h3>Admin Dashboard</h3>
+ <p>Total Lands: ${lands.length}</p>
+ <p>Total Registrations: ${users.length}</p>
+ <h3>Registered Users</h3>
+ ${users.map(u=>`<p>${u.name} - ${u.type} - ${u.phone}</p>`).join('')}
+ `;
+ }else{
+ alert('Incorrect PIN');
+ }
+}
+
+displayLands();
+</script>
+
+</body>
+</html>
