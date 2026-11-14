@@ -219,7 +219,18 @@ Explore Lands
 </footer>
 
 <script>
-let lands=JSON.parse(localStorage.getItem('apalmLands')||'[]');
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyB6DoQpVSN20rxwJCylEyE9F_IPe6-iklE",
+  authDomain: "apalm-47771.firebaseapp.com",
+  projectId: "apalm-47771",
+  storageBucket: "apalm-47771.firebasestorage.app",
+  messagingSenderId: "811369297982",
+  appId: "1:811369297982:web:fbc2d3105314773715f96f",
+  measurementId: "G-G0HJ8CDX1P"
+};
+ 
+ let lands=JSON.parse(localStorage.getItem('apalmLands')||'[]');
 let users=JSON.parse(localStorage.getItem('apalmUsers')||'[]');
 
 function showPage(id){
