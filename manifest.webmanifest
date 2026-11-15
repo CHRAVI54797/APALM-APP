@@ -1,0 +1,27 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "APALM-Agricultural Land Management",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "APALM",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "https://effortless-chaja-de72ba.netlify.app/favicon.ico",
+      "type": "image/x-icon",
+      "isSquare": false,
+      "isPng": false,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 0,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": false
+    }
+  ],
+  "id": "apalm-agricultural-land",
+  "description": "APALM helps buyers and sellers find and manage agricultural land easily across Andhra Pradesh."
+}
