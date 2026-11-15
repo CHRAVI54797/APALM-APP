@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APALM - Agricultural Land Management</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f7f0;color:#263b28}
+header{background:#14532d;color:white;padding:22px 15px;text-align:center}
+header h1{margin:0;font-size:27px} header p{margin:8px 0 0}
+nav{display:flex;flex-wrap:wrap;justify-content:center;background:#166534}
+nav button{border:0;background:transparent;color:white;padding:14px 12px;font-size:14px;cursor:pointer}
+nav button:hover{background:#22a34a}
+.hero{background:linear-gradient(120deg,#14532d,#65a30d);color:white;text-align:center;padding:45px 15px}
+.hero h2{font-size:27px}
+.container{max-width:1000px;margin:auto;padding:20px 14px}
+.card{background:white;padding:20px;margin:15px 0;border-radius:12px;box-shadow:0 3px 12px #00000012}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+input,select,textarea{width:100%;padding:13px;margin:8px 0;border:1px solid #ccc;border-radius:7px;font-size:15px}
+.primary{background:#15803d;color:white;border:0;padding:13px 20px;border-radius:7px;font-size:16px;cursor:pointer}
+.secondary{background:#475569;color:white;border:0;padding:10px 14px;border-radius:7px;cursor:pointer;margin:4px}
+.danger{background:#b91c1c;color:white;border:0;padding:10px 14px;border-radius:7px;cursor:pointer;margin:4px}
+.page{display:none}.page.active{display:block}
+.land{border:1px solid #ddd;border-radius:10px;padding:15px;background:#fff;margin:12px 0}
+.land h3{color:#166534}
+footer{background:#14532d;color:white;text-align:center;padding:22px;margin-top:30px}
+.notice{padding:12px;border-radius:8px;background:#ecfdf5;margin:12px 0}
+.small{font-size:13px;color:#475569}
+.status{font-weight:bold;color:#166534}
+</style>
+</head>
+<body>
+<header>
+<h1>🌾 APALM</h1>
+<p>Agricultural Land Management Application</p>
+<p>వ్యవసాయ భూముల కొనుగోలు మరియు అమ్మకాల వేదిక</p>
+</header>
+<nav>
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('lands')">Land for Sale</button>
+<button onclick="showPage('buyer')">Buyer Registration</button>
+<button onclick="showPage('seller')">Seller Registration</button>
+<button onclick="showPage('add')">Submit Land</button>
+<button onclick="showPage('admin')">Admin</button>
+</nav>
+
+<section id="home" class="page active">
+<div class="hero">
+<h2>Welcome to APALM</h2>
+<h3>మీ వ్యవసాయ భూములకు సరైన వేదిక</h3>
+<p>Buy Agricultural Land | Sell Agricultural Land</p>
+<button class="primary" onclick="showPage('lands')">Explore Lands</button>
+</div>
+<div class="container"><div class="grid">
+<div class="card"><h2>🌾</h2><h3>Agricultural Lands</h3><p>అందుబాటులో ఉన్న వ్యవసాయ భూముల వివరాలు.</p></div>
+<div class="card"><h2>🏡</h2><h3>Land Buyers</h3><p>భూమి కొనుగోలు చేయాలనుకునే వారి నమోదు.</p></div>
+<div class="card"><h2>👨‍🌾</h2><h3>Land Sellers</h3><p>భూమి అమ్మాలనుకునే వారి నమోదు.</p></div>
+</div></div>
+</section>
+
+<section id="lands" class="page container"><div class="card">
+<h2>🌾 Agricultural Land for Sale</h2>
+<div id="landList"><p>భూముల వివరాలు లోడ్ అవుతున్నాయి...</p></div>
+</div></section>
+
+<section id="buyer" class="page container"><div class="card">
+<h2>🏡 Buyer Registration</h2>
+<form id="buyerForm">
+<input name="name" placeholder="Full Name" maxlength="80" required>
+<input name="phone" placeholder="Mobile Number" type="tel" maxlength="15" required>
+<input name="location" placeholder="Preferred Location" maxlength="120" required>
+<select name="budget" required><option value="">Select Budget</option><option>Below 5 Lakhs</option><option>5 - 10 Lakhs</option><option>10 - 25 Lakhs</option><option>25 - 50 Lakhs</option><option>Above 50 Lakhs</option></select>
+<button class="primary" type="submit">Register as Buyer</button>
+</form><div id="buyerMsg" class="small"></div>
+</div></section>
+
+<section id="seller" class="page container"><div class="card">
+<h2>👨‍🌾 Seller Registration</h2>
+<form id="sellerForm">
+<input name="name" placeholder="Seller Full Name" maxlength="80" required>
+<input name="phone" placeholder="Mobile Number" type="tel" maxlength="15" required>
+<input name="location" placeholder="Land Location" maxlength="120" required>
+<input name="area" placeholder="Land Area (Acres)" type="number" min="0.01" step="any" required>
+<button class="primary" type="submit">Register as Seller</button>
+</form><div id="sellerMsg" class="small"></div>
+</div></section>
+
+<section id="add" class="page container"><div class="card">
+<h2>➕ Submit Agricultural Land</h2>
+<p class="small">మీ వివరాలు Admin పరిశీలించిన తర్వాతే భూమి ప్రకటన అందరికీ కనిపిస్తుంది.</p>
+<form id="landForm">
+<input name="title" placeholder="Land Title" maxlength="100" required>
+<input name="location" placeholder="Village / Mandal / District" maxlength="160" required>
+<input name="area" placeholder="Land Area (Acres)" type="number" min="0.01" step="any" required>
+<input name="price" placeholder="Expected Price (₹)" type="number" min="1" required>
+<textarea name="details" placeholder="Land Details" maxlength="1000"></textarea>
+<input name="phone" placeholder="Contact Mobile Number" type="tel" maxlength="15" required>
+<button class="primary" type="submit">Submit Land Details</button>
+</form><div id="landMsg" class="small"></div>
+</div></section>
+
+<section id="admin" class="page container"><div class="card">
+<h2>🔐 Admin Login</h2>
+<p class="small">అధికారిక Admin Account ద్వారా మాత్రమే ప్రవేశం.</p>
+<form id="adminLoginForm">
+<input id="adminEmail" type="email" value="ravibabu54797@gmail.com" readonly required>
+<input id="adminPassword" type="password" placeholder="Admin Password" autocomplete="current-password" required>
+<button class="primary" type="submit">Login</button>
+</form>
+<button id="logoutBtn" class="secondary" style="display:none" type="button">Logout</button>
+<div id="adminMsg" class="notice" aria-live="polite"></div>
+<div id="adminData"></div>
+</div></section>
+
+<footer><h3>🌾 APALM</h3><p>Agricultural Land Management Application</p><p>© 2026 APALM. All Rights Reserved.</p></footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, query, where, serverTimestamp, doc, updateDoc, deleteDoc, writeBatch, setDoc, deleteField } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB6DoQpVSN20rxwJCylEyE9F_IPe6-iklE",
+  authDomain: "apalm-47771.firebaseapp.com",
+  projectId: "apalm-47771",
+  storageBucket: "apalm-47771.firebasestorage.app",
+  messagingSenderId: "811369297982",
+  appId: "1:811369297982:web:fbc2d3105314773715f96f",
+  measurementId: "G-G0HJ8CDX1P"
+};
+const ADMIN_EMAIL = "ravibabu54797@gmail.com";
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+let currentAdmin = null;
+
+window.showPage = function(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='lands') loadPublishedLands();
+  if(id==='admin' && currentAdmin) loadAdminDashboard();
+};
+
+function clean(value){return String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function formData(form){return Object.fromEntries(new FormData(form).entries());}
+function setMessage(id,msg,isError=false){
+ const el=document.getElementById(id); el.textContent=msg; el.style.color=isError?'#b91c1c':'#166534';
+}
+
+document.getElementById('buyerForm').addEventListener('submit', async e=>{
+ e.preventDefault(); const f=e.currentTarget; const d=formData(f);
+ try{
+  await addDoc(collection(db,'users'),{name:d.name.trim(),phone:d.phone.trim(),location:d.location.trim(),budget:d.budget,type:'Buyer',createdAt:serverTimestamp()});
+  setMessage('buyerMsg','Buyer Registration Successful!'); f.reset();
+ }catch(err){console.error(err);setMessage('buyerMsg','నమోదు కాలేదు. దయచేసి మళ్లీ ప్రయత్నించండి.',true);}
+});
+document.getElementById('sellerForm').addEventListener('submit', async e=>{
+ e.preventDefault(); const f=e.currentTarget; const d=formData(f);
+ try{
+  await addDoc(collection(db,'users'),{name:d.name.trim(),phone:d.phone.trim(),location:d.location.trim(),area:Number(d.area),type:'Seller',createdAt:serverTimestamp()});
+  setMessage('sellerMsg','Seller Registration Successful!'); f.reset();
+ }catch(err){console.error(err);setMessage('sellerMsg','నమోదు కాలేదు. దయచేసి మళ్లీ ప్రయత్నించండి.',true);}
+});
+document.getElementById('landForm').addEventListener('submit', async e=>{
+ e.preventDefault(); const f=e.currentTarget; const d=formData(f);
+ try{
+  const landRef=doc(collection(db,'lands'));
+  const batch=writeBatch(db);
+  batch.set(landRef,{title:d.title.trim(),location:d.location.trim(),area:Number(d.area),price:Number(d.price),details:d.details.trim(),status:'pending',createdAt:serverTimestamp()});
+  batch.set(doc(db,'sellerContacts',landRef.id),{phone:d.phone.trim(),createdAt:serverTimestamp()});
+  await batch.commit();
+  setMessage('landMsg','మీ భూమి వివరాలు అందాయి. Admin పరిశీలన తర్వాత ప్రకటన కనిపిస్తుంది.'); f.reset();
+ }catch(err){console.error(err);setMessage('landMsg','వివరాలు సేవ్ కాలేదు. దయచేసి మళ్లీ ప్రయత్నించండి.',true);}
+});
+
+async function loadPublishedLands(){
+ const box=document.getElementById('landList'); box.textContent='భూముల వివరాలు లోడ్ అవుతున్నాయి...';
+ try{
+  const q=query(collection(db,'lands'),where('status','==','published'));
+  const snap=await getDocs(q);
+  if(snap.empty){box.innerHTML='<p>ప్రస్తుతం ప్రచురించిన భూముల వివరాలు లేవు.</p>';return;}
+  box.innerHTML=snap.docs.map(s=>{
+   const l=s.data();
+   return `<div class="land"><h3>🌾 ${clean(l.title)}</h3><p><b>Location:</b> ${clean(l.location)}</p><p><b>Area:</b> ${clean(l.area)} Acres</p><p><b>Price:</b> ₹${Number(l.price||0).toLocaleString('en-IN')}</p><p>${clean(l.details||'')}</p><p class="small">సంప్రదింపు వివరాల కోసం Adminను సంప్రదించండి.</p></div>`;
+  }).join('');
+ }catch(err){console.error(err);box.textContent='భూముల వివరాలు లోడ్ కాలేదు. Firebase Rules తనిఖీ చేయాలి.';}
+}
+
+document.getElementById('adminLoginForm').addEventListener('submit',async e=>{
+ e.preventDefault(); const email=document.getElementById('adminEmail').value.trim().toLowerCase();
+ if(email!==ADMIN_EMAIL){setMessage('adminMsg','ఈ ఖాతాకు Admin అనుమతి లేదు.',true);return;}
+ try{
+  await signInWithEmailAndPassword(auth,email,document.getElementById('adminPassword').value);
+  document.getElementById('adminPassword').value='';
+ }catch(err){console.error(err);setMessage('adminMsg','Login విఫలమైంది. Email/Password తనిఖీ చేయండి.',true);}
+});
+document.getElementById('logoutBtn').addEventListener('click',()=>signOut(auth));
+onAuthStateChanged(auth,user=>{
+ currentAdmin=(user && user.email && user.email.toLowerCase()===ADMIN_EMAIL)?user:null;
+ const isAdmin=!!currentAdmin;
+ document.getElementById('adminLoginForm').style.display=isAdmin?'none':'block';
+ document.getElementById('logoutBtn').style.display=isAdmin?'inline-block':'none';
+ if(isAdmin){setMessage('adminMsg','Admin Login Successful.');loadAdminDashboard();}
+ else{document.getElementById('adminData').innerHTML='';}
+});
+
+async function loadAdminDashboard(){
+ if(!currentAdmin)return;
+ const box=document.getElementById('adminData'); box.textContent='డేటా లోడ్ అవుతోంది...';
+ try{
+  const [landSnap,userSnap,contactSnap]=await Promise.all([getDocs(collection(db,'lands')),getDocs(collection(db,'users')),getDocs(collection(db,'sellerContacts'))]);
+  const contactMap=new Map(contactSnap.docs.map(c=>[c.id,c.data()]));
+  // One-time migration: move any older land phone numbers into the Admin-only collection.
+  const migration=writeBatch(db); let migrationNeeded=false;
+  landSnap.forEach(s=>{const old=s.data(); if(old.phone && !contactMap.has(s.id)){migration.set(doc(db,'sellerContacts',s.id),{phone:old.phone,createdAt:serverTimestamp()}); contactMap.set(s.id,{phone:old.phone}); migrationNeeded=true;} if(Object.prototype.hasOwnProperty.call(old,'phone')){migration.update(doc(db,'lands',s.id),{phone:deleteField()}); migrationNeeded=true;}});
+  if(migrationNeeded) await migration.commit();
+  let out=`<h3>Admin Dashboard</h3><p>Total Land Submissions: ${landSnap.size}</p><p>Total Registrations: ${userSnap.size}</p><h3>Land Submissions</h3>`;
+  if(landSnap.empty)out+='<p>Land submissions లేవు.</p>';
+  landSnap.forEach(s=>{
+   const l=s.data(); const status=clean(l.status||'pending'); const contact=contactMap.get(s.id);
+   out+=`<div class="land"><h4>${clean(l.title)}</h4><p>${clean(l.location)} | ${clean(l.area)} Acres | ₹${Number(l.price||0).toLocaleString('en-IN')}</p><p>Seller Phone (Admin only): ${clean(contact?.phone||l.phone||'Not available')}</p><p>Status: <span class="status">${status}</span></p><button class="primary" data-action="publish" data-id="${s.id}">Publish</button><button class="secondary" data-action="pending" data-id="${s.id}">Set Pending</button><button class="danger" data-action="delete-land" data-id="${s.id}">Delete</button></div>`;
+  });
+  out+='<h3>Buyer / Seller Registrations</h3>';
+  if(userSnap.empty)out+='<p>Registrations లేవు.</p>';
+  userSnap.forEach(s=>{const u=s.data();out+=`<div class="land"><b>${clean(u.name)}</b> — ${clean(u.type)}<p>Phone: ${clean(u.phone)} | Location: ${clean(u.location)}</p><p>${u.budget?'Budget: '+clean(u.budget):'Area: '+clean(u.area||'')} </p></div>`;});
+  box.innerHTML=out;
+ }catch(err){console.error(err);box.textContent='Admin డేటా లోడ్ కాలేదు. Firestore Security Rules తనిఖీ చేయండి.';}
+}
+document.getElementById('adminData').addEventListener('click',async e=>{
+ const b=e.target.closest('button[data-action]'); if(!b||!currentAdmin)return;
+ const id=b.dataset.id, action=b.dataset.action;
+ try{
+  if(action==='delete-land'){if(!confirm('ఈ Land submission తొలగించాలా?'))return;await deleteDoc(doc(db,'lands',id));}
+  else{await updateDoc(doc(db,'lands',id),{status:action==='publish'?'published':'pending'});}
+  await loadAdminDashboard();
+ }catch(err){console.error(err);setMessage('adminMsg','ఈ చర్య పూర్తి కాలేదు. Rules తనిఖీ చేయండి.',true);}
+});
+</script>
+</body>
+</html>
